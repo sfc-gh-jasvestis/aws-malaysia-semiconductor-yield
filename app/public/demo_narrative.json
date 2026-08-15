@@ -1,0 +1,122 @@
+{
+  "title": "Semiconductor Yield Optimization & Defect Detection",
+  "duration": "4 minutes",
+  "thesis": "Snowflake detects yield degradation across 12 fabs, classifies wafer defects with AI, forecasts equipment failures, and alerts engineers \u2014 all native SQL, no external ML platform needed",
+  "tabs": [
+    {
+      "id": "executive-cockpit",
+      "persona": {
+        "name": "Dr. Tan Wei Lin",
+        "role": "VP Manufacturing",
+        "avatar": "\ud83d\udc69\u200d\ud83d\udd2c"
+      },
+      "talking_points": [
+        "Two hundred million ringgit in annual yield loss across 12 fabs in the Penang-Kulim corridor.",
+        "Four fabs are below target yield \u2014 FAB-002, FAB-005, FAB-008, and FAB-011.",
+        "Seventeen equipment alarms in the last 48 hours."
+      ],
+      "show": [
+        "Point at the RM 200M yield loss KPI card",
+        "Highlight the 4 red-status fabs",
+        "Note the 17 alarms badge"
+      ],
+      "call_out": "RM 200M yield loss \u2014 4 of 12 fabs CRITICAL",
+      "transition": {
+        "next_tab": "yield-analytics",
+        "line": "Let's drill into which fabs are degrading and why."
+      }
+    },
+    {
+      "id": "yield-analytics",
+      "persona": {
+        "name": "Ahmad bin Ismail",
+        "role": "Process Engineer",
+        "avatar": "\ud83d\udc68\u200d\ud83d\udd27"
+      },
+      "talking_points": [
+        "FAB-002 running Intel's 7nm node \u2014 yield at 83.4%, thirteen points below target.",
+        "Defect Pareto shows Particle contamination driving 42% of failures.",
+        "ML.ANOMALY_DETECTION confirms: 7 of the last 14 days anomalous for FAB-002."
+      ],
+      "show": [
+        "Click FAB-002 in the fab list",
+        "Show the yield trend with anomaly markers",
+        "Point at defect Pareto"
+      ],
+      "call_out": "7 of 14 days anomalous \u2014 systematic, not random",
+      "transition": {
+        "next_tab": "equipment-health",
+        "line": "The yield is broken. Let's see if equipment telemetry explains why."
+      }
+    },
+    {
+      "id": "equipment-health",
+      "persona": {
+        "name": "Ahmad bin Ismail",
+        "role": "Process Engineer",
+        "avatar": "\ud83d\udc68\u200d\ud83d\udd27"
+      },
+      "talking_points": [
+        "Seventeen alarms in 48 hours. ML.FORECAST predicts three tools will exceed failure threshold within 72 hours.",
+        "EQ-0047 \u2014 the ASML lithography tool in FAB-002 \u2014 chamber pressure spiking.",
+        "Snowflake connects equipment drift to yield loss to defect type \u2014 one query, one platform."
+      ],
+      "show": [
+        "Point at equipment alarm table sorted by severity",
+        "Click EQ-0047 for pressure trend",
+        "Show correlation: pressure spikes match yield drops"
+      ],
+      "call_out": "3 tools predicted to fail within 72 hours \u2014 ML.FORECAST",
+      "transition": {
+        "next_tab": "ask-ai",
+        "line": "Now let the VP ask the system directly."
+      }
+    },
+    {
+      "id": "ask-ai",
+      "persona": {
+        "name": "Dr. Tan Wei Lin",
+        "role": "VP Manufacturing",
+        "avatar": "\ud83d\udc69\u200d\ud83d\udd2c"
+      },
+      "talking_points": [
+        "Dr. Tan doesn't write SQL. She asks: 'Which fab has the highest yield loss in ringgit?'",
+        "Cortex Analyst writes the query, returns the answer: FAB-002, RM 47M.",
+        "Switch to advisor: 'What corrective actions for FAB-002?' \u2014 searches process docs and recommends."
+      ],
+      "show": [
+        "Type: 'Which fab has the highest yield loss in MYR?'",
+        "Show SQL + answer",
+        "Switch to advisor mode"
+      ],
+      "call_out": "Two AI modes: SQL analytics + strategic advisory",
+      "transition": {
+        "next_tab": "architecture",
+        "line": "Every capability \u2014 native Snowflake SQL."
+      }
+    },
+    {
+      "id": "architecture",
+      "persona": {
+        "name": "Dr. Tan Wei Lin",
+        "role": "VP Manufacturing",
+        "avatar": "\ud83d\udc69\u200d\ud83d\udd2c"
+      },
+      "talking_points": [
+        "Eight Snowflake capabilities, six AWS services.",
+        "In Snowflake-only mode \u2014 Cortex Complete replaces Bedrock, ML functions replace SageMaker.",
+        "Malaysia's semiconductor industry: RM 450 billion. This monitors 12 fabs, 120 tools, 5,000 lots."
+      ],
+      "show": [
+        "Walk through architecture diagram",
+        "Toggle dual-build mode",
+        "Point at feature count"
+      ],
+      "call_out": "One platform, native SQL, open Iceberg",
+      "transition": {
+        "next_tab": "",
+        "line": "That's Snowflake and AWS \u2014 better together for semiconductor manufacturing."
+      }
+    }
+  ]
+}
