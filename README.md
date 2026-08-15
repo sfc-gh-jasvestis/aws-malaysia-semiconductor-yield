@@ -10,7 +10,6 @@ Malaysia's Penang-Kulim corridor is home to 12 semiconductor fabs producing chip
 flowchart LR
     IOT[IoT Core] --> KIN[Kinesis]
     KIN --> SPS[Snowpipe Streaming]
-    SP --> RAW[RAW Tables]
     SPS --> RAW
     RAW --> DT[Dynamic Tables]
     DT --> ML[ML Functions]
