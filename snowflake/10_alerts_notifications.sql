@@ -8,7 +8,7 @@ USE SCHEMA APP;
 CREATE OR REPLACE NOTIFICATION INTEGRATION aws_malaysia_semiconductor_yield_EMAIL_INT
   TYPE = EMAIL
   ENABLED = TRUE
-  ALLOWED_RECIPIENTS = ('jonathan.asvestis@snowflake.com');
+  ALLOWED_RECIPIENTS = ('<YOUR_EMAIL>');
 
 -- Alert: YIELD_CRITICAL_ALERT
 CREATE OR REPLACE ALERT APP.YIELD_CRITICAL_ALERT
@@ -22,7 +22,7 @@ IF (EXISTS (
 THEN
   CALL SYSTEM$SEND_EMAIL(
     'aws_malaysia_semiconductor_yield_EMAIL_INT',
-    'jonathan.asvestis@snowflake.com',
+    '<YOUR_EMAIL>',
     '[ALERT] Semiconductor Yield Optimization & Defect Detection: Yield below critical threshold',
     'Yield below critical threshold'
   );
@@ -41,7 +41,7 @@ IF (EXISTS (
 THEN
   CALL SYSTEM$SEND_EMAIL(
     'aws_malaysia_semiconductor_yield_EMAIL_INT',
-    'jonathan.asvestis@snowflake.com',
+    '<YOUR_EMAIL>',
     '[ALERT] Semiconductor Yield Optimization & Defect Detection: Equipment alarm rate exceeding threshold',
     'Equipment alarm rate exceeding threshold'
   );
