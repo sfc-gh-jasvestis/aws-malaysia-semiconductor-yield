@@ -123,7 +123,7 @@ Industry research and Snowflake customer outcomes:
 - **Malaysia semiconductor exports reached RM 450B (US$98B) in 2023, representing 18.4% of GDP** — [MIDA](https://www.mida.gov.my/setting-up-in-malaysia/why-malaysia/)
 - **AI-powered yield optimization improves fab yield 2-5% — worth $50-100M annually per fab** — [McKinsey Semiconductors](https://www.mckinsey.com/industries/semiconductors/our-insights)
 - **Predictive maintenance in semiconductor fabs reduces unplanned downtime by 30-50%** — [Deloitte Smart Factory](https://www2.deloitte.com/us/en/insights/focus/industry-4-0.html)
-- **Yamaha Motor achieved real-time manufacturing intelligence on Snowflake** — [Snowflake Customers](https://www.snowflake.com/en/customers/all-customers/yamaha-motor/)
+- **Western Digital** (Snowflake customer): processes 2+ petabytes of manufacturing data on Snowflake for real-time yield and quality analytics across global fabs -- [snowflake.com/customers/western-digital](https://www.snowflake.com/en/customers/all-customers/case-study/western-digital/)
 
 
 ## Key Demo Numbers
