@@ -134,11 +134,10 @@ export default function HomePage() {
           'Show defect density correlation with equipment PM schedule',
           'What is the predicted yield for the new 7nm product ramp?',
         ]}
-        mode="both"
-        onSubmit={async (question, mode) => {
+        onSubmit={async (question) => {
           return {
-            answer: `[Demo Mode] Response to: "${question}" (${mode} mode). Connect to Snowflake for live data.`,
-            sql: mode === 'sql' ? 'SELECT * FROM CURATED.SUMMARY LIMIT 10;' : undefined,
+            answer: `[Demo Mode] Response to: "${question}" Connect to Snowflake for live data.`,
+            sql: 'SELECT * FROM CURATED.SUMMARY LIMIT 10;',
           };
         }}
       />
