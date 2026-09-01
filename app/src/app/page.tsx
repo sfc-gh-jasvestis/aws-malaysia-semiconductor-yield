@@ -32,15 +32,23 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+
+  // Look up a KPI value returned by /api/data (sourced from CURATED.KPI_SUMMARY).
+  // Falls back to the original literal so the card still renders if the API,
+  // or KPI_SUMMARY, is unavailable.
+  const kpiVal = (title: string, fallback: string): string =>
+    (data?.kpiCards as { title: string; value: string }[] | undefined)
+      ?.find((k) => k.title === title)?.value ?? fallback;
+
   const title = narrative?.title || 'SEA AWS Demo';
 
   const executiveCockpit = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KPICard title="Wafer Yield (Avg)" value="94.2%" status="neutral" />
-        <KPICard title="Die Yield" value="87.8%" status="neutral" />
-        <KPICard title="Defect Density" value="0.12/cm²" status="neutral" />
-        <KPICard title="Wafers Processed (MTD)" value="42K" status="neutral" />
+        <KPICard title="Wafer Yield (Avg)" value={kpiVal('Wafer Yield (Avg)', '94.2%')} status="neutral" />
+        <KPICard title="Die Yield" value={kpiVal('Die Yield', '87.8%')} status="neutral" />
+        <KPICard title="Defect Density" value={kpiVal('Defect Density', '0.12/cm²')} status="neutral" />
+        <KPICard title="Wafers Processed (MTD)" value={kpiVal('Wafers Processed (MTD)', '42K')} status="neutral" />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="lg:col-span-1">
@@ -87,9 +95,9 @@ export default function HomePage() {
   const domainTab1 = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <KPICard title="Killer Defect Rate" value="2.1%" />
-        <KPICard title="Inline Pass Rate" value="98.7%" />
-        <KPICard title="DPPM" value="84" />
+        <KPICard title="Killer Defect Rate" value={kpiVal('Killer Defect Rate', '2.1%')} />
+        <KPICard title="Inline Pass Rate" value={kpiVal('Inline Pass Rate', '98.7%')} />
+        <KPICard title="DPPM" value={kpiVal('DPPM', '84')} />
       </div>
       <Chart
         data={data?.detail || [{ x: 'Mon', y: 24 }, { x: 'Tue', y: 28 }, { x: 'Wed', y: 22 }, { x: 'Thu', y: 31 }, { x: 'Fri', y: 26 }, { x: 'Sat', y: 19 }, { x: 'Sun', y: 23 }]}
