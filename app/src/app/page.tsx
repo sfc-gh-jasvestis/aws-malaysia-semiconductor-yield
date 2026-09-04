@@ -54,6 +54,7 @@ export default function HomePage() {
         <div className="lg:col-span-1">
           <GeoMap
             country="malaysia"
+            labels={{ entity: 'Products', event: 'Equipment Telemetry', alert: 'Defects' }}
             regions={data?.regions}
             markers={[{"label": "Penang", "value": "Fab: util 92%", "color": "green", "size": "lg"}, {"label": "Kulim", "value": "Assembly: yield 94%", "color": "green", "size": "lg"}, {"label": "Kuala Lumpur", "value": "HQ & design center", "color": "blue", "size": "md"}, {"label": "Johor Bahru", "value": "Test facility", "color": "green", "size": "md"}]}
             routes={[{"from": "Penang", "to": "Kulim", "color": "#29B5E8"}]}
@@ -84,8 +85,13 @@ export default function HomePage() {
         columns={[
           { key: 'id', header: 'Lot' },
           { key: 'name', header: 'Product' },
+          { key: 'region', header: 'Region' },
           { key: 'status', header: 'Yield Status' },
-          { key: 'value', header: 'Yield %' },
+          { key: 'm1', header: 'Yield %' },
+          { key: 'm2', header: 'Die Yield' },
+          { key: 'm3', header: 'Defect Density' },
+          { key: 'events', header: 'Equipment Telemetry' },
+          { key: 'alerts', header: 'Defects' },
         ]}
         data={data?.entities || []}
         title="Lot Yield Summary"
