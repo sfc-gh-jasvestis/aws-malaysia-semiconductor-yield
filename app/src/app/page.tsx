@@ -54,6 +54,7 @@ export default function HomePage() {
         <div className="lg:col-span-1">
           <GeoMap
             country="malaysia"
+            regions={data?.regions}
             markers={[{"label": "Penang", "value": "Fab: util 92%", "color": "green", "size": "lg"}, {"label": "Kulim", "value": "Assembly: yield 94%", "color": "green", "size": "lg"}, {"label": "Kuala Lumpur", "value": "HQ & design center", "color": "blue", "size": "md"}, {"label": "Johor Bahru", "value": "Test facility", "color": "green", "size": "md"}]}
             routes={[{"from": "Penang", "to": "Kulim", "color": "#29B5E8"}]}
             title="Geographic Overview"
@@ -70,7 +71,7 @@ export default function HomePage() {
           title="Yield Trend by Technology Node"
         />
         <Chart
-          data={data?.categories || [{ category: 'North', count: 82 }, { category: 'Central', count: 74 }, { category: 'South', count: 91 }, { category: 'Highland', count: 68 }, { category: 'Coastal', count: 77 }]}
+          data={data?.categoryMetric || [{ category: 'North', count: 82 }, { category: 'Central', count: 74 }, { category: 'South', count: 91 }, { category: 'Highland', count: 68 }, { category: 'Coastal', count: 77 }]}
           type="bar"
           xKey="category"
           yKeys={[{ key: 'count', name: 'Count' }]}
