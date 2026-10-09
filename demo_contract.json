@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "repo": "aws-malaysia-semiconductor-yield",
+  "operation": "on-demand",
+  "data_classification": "synthetic demonstration only",
+  "currency": "MYR",
+  "grains": {
+    "RAW.TOOLS": "one row per process tool",
+    "RAW.TOOL_DAILY": "one row per tool per day (90 days)",
+    "RAW.SPARE_PARTS": "one row per tool (chamber kit snapshot)",
+    "CURATED.PERFORMANCE_SUMMARY": "one row per tool",
+    "CURATED.TREND_ANALYSIS": "one row per day",
+    "CURATED.EXCURSION_CAUSES": "one row per root cause",
+    "CURATED.KPI_SUMMARY": "one row per KPI",
+    "ML.EXCURSION_RISK_SCORES": "one row per tool (latest day)"
+  },
+  "metrics": {
+    "Die Yield": "100 * SUM(GOOD_DIE) / SUM(GROSS_DIE)",
+    "Yield Excursions": "SUM(EXCURSION_COUNT)",
+    "Defects per Wafer": "SUM(DEFECT_COUNT) / SUM(WAFERS)",
+    "Wafer Moves": "SUM(WAFERS); one wafer processed at one tool step",
+    "Tool Availability": "100 * SUM(OPERATING_HOURS) / SUM(PLANNED_HOURS)",
+    "Tools Monitored": "COUNT(RAW.TOOLS)",
+    "Chamber Kit Coverage": "100 * SUM(LEAST(ON_HAND_QTY, REQUIRED_QTY)) / SUM(REQUIRED_QTY)"
+  },
+  "chart_bindings": {
+    "daily_die_yield": ["CURATED.TREND_ANALYSIS.METRIC_DATE", "DIE_YIELD_PCT"],
+    "lost_die_by_cause": ["CURATED.EXCURSION_CAUSES.ROOT_CAUSE", "LOST_DIE"],
+    "pm_vs_yield": ["CURATED.PERFORMANCE_SUMMARY.PM_COMPLIANCE_PCT", "DIE_YIELD_PCT"],
+    "quicksight_excursion_risk": ["ENTITY_ID", "MAX(EXCURSION_PROB_7D)"]
+  },
+  "freshness": "MAX(EVENT_DATE) is an observation watermark; requestedAt is not freshness",
+  "required_capabilities": {
+    "core_pipeline": "Curated KPIs reconcile to a RAW recomputation (run_core.py checks this on every build)",
+    "excursion_risk_model": "Snowflake ML CLASSIFICATION of P(excursion in next 7 days) per tool, evaluated on an out-of-time holdout",
+    "forecast_and_anomaly": "14-day fab-wide die-yield FORECAST; RF power drift ANOMALY_DETECTION (train 75 days, detect last 15)",
+    "search": "Cortex Search SEARCH.PROCESS_SOP_SEARCH over synthetic excursion-response SOPs (one per process step and cause)",
+    "semantic_analytics": "Semantic view APP.YIELD_ANALYTICS and Cortex Agent APP.YIELD_AGENT using analyst + search tools",
+    "grounded_ai": "Agent answers return generated SQL and SOP citations; the action memo uses only KPI, excursion, cause and risk rows",
+    "quicksight": "DIRECT_QUERY dashboard (KPIs, daily die yield, excursions by tool, excursion risk, IoT message count) through a read-only Snowflake service user",
+    "quicksight_q": "Amazon Q topic over the curated datasets for natural-language questions",
+    "aws_ingestion": "IoT Core rule -> S3 -> Snowpipe AUTO_INGEST into RAW.LIVE_TELEMETRY",
+    "notifications": "APP.LIVE_ALARM_ALERT logs new ALARM readings to APP.ALERT_LOG and emails via SYSTEM$SEND_EMAIL; alert and tasks suspended between demos",
+    "orchestration": "Task graph APP.TASK_REFRESH_CURATED -> APP.TASK_RESCORE_RISK run on demand (EXECUTE TASK)",
+    "app_deployment": "SPCS service APP.MY_SEMI_YIELD_APP; routes /api/data, /api/ask, /api/agent"
+  },
+  "builds": {
+    "snowflake": {
+      "database": "MALAYSIA_SEMI_YIELD_SNOWFLAKE",
+      "app_setting": "DEMO_PLATFORM=snowflake",
+      "live_telemetry": "APP.SIMULATE_TELEMETRY(n)",
+      "memo": "Cortex AI_COMPLETE (claude-sonnet-4-5)"
+    },
+    "aws": {
+      "database": "MALAYSIA_SEMI_YIELD_AWS",
+      "app_setting": "DEMO_PLATFORM=aws",
+      "live_telemetry": "AWS IoT Core -> S3 -> Snowpipe",
+      "memo": "Amazon Bedrock Claude Sonnet 4.5 via APP.BEDROCK_GENERATE",
+      "capabilities": "see required_capabilities"
+    }
+  }
+}
